@@ -1,12 +1,12 @@
 begin;
 select plan(12);
 
-select has_table('public', 'platform_admins');
-select has_table('public', 'subscription_plans');
-select has_table('public', 'business_subscriptions');
-select has_table('public', 'feature_flags');
-select has_table('public', 'business_feature_flags');
-select has_table('public', 'audit_logs');
+select has_table('public', 'platform_admins', 'platform_admins table exists');
+select has_table('public', 'subscription_plans', 'subscription_plans table exists');
+select has_table('public', 'business_subscriptions', 'business_subscriptions table exists');
+select has_table('public', 'feature_flags', 'feature_flags table exists');
+select has_table('public', 'business_feature_flags', 'business_feature_flags table exists');
+select has_table('public', 'audit_logs', 'audit_logs table exists');
 
 select ok(
   not has_table_privilege('anon', 'public.platform_admins', 'select,insert,update,delete'),

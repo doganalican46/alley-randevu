@@ -1,12 +1,12 @@
 begin;
 select plan(18);
 
-select has_table('public', 'customer_loyalty_accounts');
-select has_table('public', 'customer_loyalty_transactions');
-select has_table('public', 'campaigns');
-select col_not_null('public', 'customer_loyalty_accounts', 'business_id');
-select col_not_null('public', 'customer_loyalty_transactions', 'business_id');
-select col_not_null('public', 'campaigns', 'business_id');
+select has_table('public', 'customer_loyalty_accounts', 'customer_loyalty_accounts table exists');
+select has_table('public', 'customer_loyalty_transactions', 'customer_loyalty_transactions table exists');
+select has_table('public', 'campaigns', 'campaigns table exists');
+select col_not_null('public', 'customer_loyalty_accounts', 'business_id', 'loyalty accounts are tenant scoped');
+select col_not_null('public', 'customer_loyalty_transactions', 'business_id', 'loyalty transactions are tenant scoped');
+select col_not_null('public', 'campaigns', 'business_id', 'campaigns are tenant scoped');
 select ok(not has_table_privilege('anon', 'public.customer_loyalty_accounts', 'select,insert,update,delete'));
 select ok(not has_table_privilege('anon', 'public.customer_loyalty_transactions', 'select,insert,update,delete'));
 select ok(not has_table_privilege('anon', 'public.campaigns', 'select,insert,update,delete'));

@@ -1,10 +1,10 @@
 begin;
 select plan(8);
 
-select has_table('public', 'business_customers');
-select has_table('public', 'customer_notes');
-select col_not_null('public', 'business_customers', 'business_id');
-select col_not_null('public', 'customer_notes', 'business_id');
+select has_table('public', 'business_customers', 'business_customers table exists');
+select has_table('public', 'customer_notes', 'customer_notes table exists');
+select col_not_null('public', 'business_customers', 'business_id', 'CRM customers are tenant scoped');
+select col_not_null('public', 'customer_notes', 'business_id', 'customer notes are tenant scoped');
 select ok(
   not has_table_privilege('anon', 'public.business_customers', 'select,insert,update,delete'),
   'anonymous users cannot access CRM customers'

@@ -96,6 +96,8 @@ select throws_ok(
   'anonymous visitor cannot call the booking transaction'
 );
 
+reset role;
+
 create temporary table booking_test_slot as
 select staff_id, starts_at
 from public.get_public_availability(
@@ -107,6 +109,7 @@ from public.get_public_availability(
 order by starts_at
 limit 1;
 
+grant select on booking_test_slot to authenticated;
 set local role authenticated;
 set local request.jwt.claim.sub = '52222222-2222-2222-2222-222222222222';
 

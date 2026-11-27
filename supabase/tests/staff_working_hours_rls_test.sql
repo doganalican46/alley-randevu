@@ -72,9 +72,11 @@ values (
 
 set local role anon;
 
-select is_empty(
+select throws_ok(
   $$select id from public.staff_working_hours$$,
-  'anonymous users cannot read working hours'
+  '42501',
+  null,
+  'anonymous users hold no working-hours select grant'
 );
 
 select throws_ok(
