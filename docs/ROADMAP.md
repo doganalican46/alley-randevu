@@ -11,7 +11,7 @@
 | 5. İşletme operasyonları | Tamamlandı              | CRM, otomatik müşteri profili, bildirim outbox'ı, aylık raporlama, tahsilat kayıtları ve doğrulanmış randevu değerlendirmeleri production RLS ile hazır.                                    |
 | 6. PWA                   | Tamamlandı              | Manifest, service worker, kurulum istemi, offline uyarısı, güvenli cache sınırı, güncelleme deneyimi ve masaüstü/mobil/offline Playwright doğrulaması hazır.                                |
 | 7. Gelişmiş özellikler   | Tamamlandı              | Sadakat hesabı ve hareketleri, izinli hedef kitle kampanyaları, güvenli bildirim kuyruğu ve müşteri CSV dışa aktarımı production RLS ile hazır.                                             |
-| 8. Production hazırlığı  | Büyük ölçüde tamamlandı | Netlify yayını, güvenlik/PWA başlıkları, GitHub Actions kalite kapısı, E2E, production health script, release checklist ve backup/restore runbook'u hazır; GitHub bağlantısı kaldı.         |
+| 8. Production hazırlığı  | Tamamlandı              | Public GitHub deposu, korumalı `main`, uygulama/veritabanı kalite kapıları, şifreli backup workflow'u, release runbook'ları ve doğrulanmış final Netlify production yayını hazır.          |
 
 ## Çalışan
 
@@ -37,13 +37,15 @@
 - Multi-tenant/RBAC veritabanı temeli
 - PWA build ve Netlify yapılandırması
 - Durum makinesi unit testleri
+- Public GitHub deposu, PR zorunluluğu ve başarılı `application`/`database` kontrolleri
+- Haftalık şifreli veritabanı backup workflow'u ve checksum doğrulama aracı
+- Netlify production yayını ve otomatik production health doğrulaması
 
 ## Sıradaki
 
-1. Harici e-posta/SMS ve ödeme sağlayıcısı entegrasyonları
-2. GitHub repository bağlantısı ve branch protection aktivasyonu
-3. Şifreli off-site backup hedefi ve ilk restore provası
-4. Gerçek cihaz PWA QA'sı ve ihtiyaç halinde Capacitor native paketleri
+1. GitHub Actions backup secret'larını tanımlayıp ilk şifreli artifact/restore provasını yapmak
+2. Harici e-posta/SMS ve ödeme sağlayıcısı entegrasyonları
+3. Gerçek cihaz PWA QA'sı ve ihtiyaç halinde Capacitor native paketleri
 
 ## Henüz geliştirilmedi
 

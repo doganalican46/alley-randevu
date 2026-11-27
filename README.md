@@ -2,6 +2,10 @@
 
 Alley Randevu, farklı sektörlere hizmet verebilen multi-tenant bir SaaS randevu yönetim uygulamasıdır. React/Vite uygulaması; Supabase Auth, tenant izoleli RLS/RBAC, katalog ve ekip yönetimi, transaction güvenli randevu akışı, CRM, operasyon raporları, sadakat ve kampanya araçları, PWA desteği ve production kalite kapılarını içerir.
 
+Canlı uygulama: [alley-randevu.netlify.app](https://alley-randevu.netlify.app)
+
+Kaynak kodu: [github.com/doganalican46/alley-randevu](https://github.com/doganalican46/alley-randevu)
+
 ## Hızlı başlangıç
 
 Gereksinimler: Node.js 22+, npm ve yerel Supabase için Docker Desktop.
