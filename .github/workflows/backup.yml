@@ -1,0 +1,71 @@
+name: Encrypted database backup
+
+on:
+  schedule:
+    - cron: '30 2 * * 0'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: production-database-backup
+  cancel-in-progress: false
+
+jobs:
+  backup:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      SUPABASE_DB_URL: ${{ secrets.SUPABASE_DB_URL }}
+      BACKUP_ENCRYPTION_PASSPHRASE: ${{ secrets.BACKUP_ENCRYPTION_PASSPHRASE }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - name: Validate backup secrets
+        shell: bash
+        run: |
+          if [[ -z "$SUPABASE_DB_URL" || -z "$BACKUP_ENCRYPTION_PASSPHRASE" ]]; then
+            echo "SUPABASE_DB_URL and BACKUP_ENCRYPTION_PASSPHRASE repository secrets are required." >&2
+            exit 1
+          fi
+      - name: Create and encrypt logical backup
+        id: backup
+        shell: bash
+        run: |
+          set -euo pipefail
+          backup_dir="$RUNNER_TEMP/alley-randevu-backup"
+          timestamp="$(date -u +'%Y%m%dT%H%M%SZ')"
+          archive="$backup_dir/alley-randevu-$timestamp.tar.gz"
+          encrypted="$archive.enc"
+          mkdir -p "$backup_dir"
+          cleanup() {
+            rm -f "$backup_dir/schema.sql" "$backup_dir/data.sql" "$archive"
+          }
+          trap cleanup EXIT
+
+          npx supabase db dump --remote="$SUPABASE_DB_URL" --file "$backup_dir/schema.sql"
+          npx supabase db dump --remote="$SUPABASE_DB_URL" --data-only --use-copy --file "$backup_dir/data.sql"
+          printf '%s\n' "created_at_utc=$timestamp" "commit_sha=$GITHUB_SHA" > "$backup_dir/metadata.txt"
+          tar -czf "$archive" -C "$backup_dir" schema.sql data.sql metadata.txt
+          openssl enc -aes-256-cbc -salt -pbkdf2 -iter 200000 \
+            -in "$archive" -out "$encrypted" -pass env:BACKUP_ENCRYPTION_PASSPHRASE
+          sha256sum "$encrypted" > "$encrypted.sha256"
+          node scripts/verify-backup.mjs "$encrypted" "$encrypted.sha256"
+
+          echo "encrypted_file=$encrypted" >> "$GITHUB_OUTPUT"
+          echo "checksum_file=$encrypted.sha256" >> "$GITHUB_OUTPUT"
+          echo "artifact_name=alley-randevu-backup-$timestamp" >> "$GITHUB_OUTPUT"
+      - name: Upload encrypted backup
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ steps.backup.outputs.artifact_name }}
+          path: |
+            ${{ steps.backup.outputs.encrypted_file }}
+            ${{ steps.backup.outputs.checksum_file }}
+          if-no-files-found: error
+          retention-days: 30

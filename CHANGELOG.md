@@ -1,0 +1,54 @@
+# Changelog
+
+## 0.1.0 - 2026-11-26
+
+- React 19, TypeScript 6, Vite 8 ve Tailwind CSS 4 tabanlı proje oluşturuldu.
+- Public tanıtım, işletme profili, randevu akışı önizlemesi, Auth akışı ve responsive işletme dashboard'u eklendi.
+- Supabase istemci adaptörü ve güvenli environment ayrımı eklendi.
+- İlk multi-tenant şema, RLS politikaları, RBAC temeli, durum geçiş kontrolü ve çakışma constraint'i eklendi.
+- Oturum provider'ı, korumalı rotalar, tenant üyelik guard'ı ve transactional işletme onboarding RPC'si eklendi.
+- İşletmeler için anonim erişim reddi, owner erişimi ve tenant izolasyonu pgTAP testleri eklendi.
+- Typed repository katmanıyla şube/hizmet kataloğu, oluşturma ve aktiflik yönetimi eklendi.
+- Şube/hizmet işlemleri için rol/özel izin farkındalıklı kontroller ve tenant allow/deny pgTAP testleri eklendi.
+- Personel profilleri, hizmet atamaları ve şube bazlı haftalık çalışma saatleri yönetimi eklendi.
+- `staff_working_hours` tablosu tenant-safe foreign key'ler, açık GRANT listesi, RLS politikaları ve allow/deny testleriyle eklendi.
+- Public işletme profili ve rezervasyon hizmet/şube seçimleri gerçek yayınlanmış tenant kataloğuna bağlandı.
+- Canlı müsaitlik tamamlanana kadar rezervasyon gönderimi açık gerekçeyle koşulsuz devre dışı bırakıldı.
+- Public katalog için yayınlanmış/aktif allow ve gizli/pasif deny pgTAP senaryoları eklendi.
+- Sistem koyu tema senkronizasyonu ve vendor code splitting eklendi.
+- PWA manifest/service worker, Netlify yapılandırması ve temel test altyapısı eklendi.
+- Katalog ve ekip rotalarına tenant üyeliğinin yanında permission tabanlı genel ekran guard'ları eklendi.
+- Kalıcı veriden gelen bilinmeyen permission anahtarları type-safe filtrelenerek yetki yükseltmesi engellendi.
+- Netlify production yayını ve CSP/HSTS dahil güçlendirilmiş güvenlik başlıkları hazırlandı.
+- İşletme yayınlama, rezervasyon kuralı, otomatik onay ve iptal penceresi ayarları eklendi.
+- Public randevu bağlantısı için tarayıcı içinde PNG/SVG QR üretimi ve paylaşım araçları eklendi.
+- Çalışma saatleri, hizmet buffer'ları ve mevcut randevulardan 15 dakikalık güvenli slotlar üreten public availability RPC'si eklendi.
+- Doğrulanmış müşteriler için snapshot alanlarını tek transaction'da yazan rezervasyon RPC'si eklendi.
+- Müşteri randevuları, iptal/yeniden planlama ve işletme durum yaşam döngüsü ekranları eklendi.
+- Rezervasyon RPC'leri için anonim deny, müşteri sahipliği ve çift rezervasyon pgTAP senaryoları eklendi.
+- Bağımsız Frankfurt Supabase production projesi oluşturuldu ve tüm migration'lar uygulandı.
+- Ayrıcalıklı rezervasyon fonksiyonları private şemaya taşındı; public SECURITY INVOKER sarmalayıcılarla advisor uyarıları giderildi.
+- RLS SELECT politikaları birleştirildi, tenant foreign key indeksleri tamamlandı ve production Security/Health Advisor temizlendi.
+- Netlify production build'i Supabase publishable anahtarıyla bağlandı ve REST bağlantısı HTTP 200 ile doğrulandı.
+- Kayıt e-postaları için production `/auth/callback` yönlendirmesi eklendi.
+- Veritabanı tabanlı Super Admin yetkisi, güvenli manuel bootstrap ve `/platform` guard'ı eklendi.
+- İşletme durumu, abonelik planı ve tenant feature flag yönetimi ile audit günlüğü eklendi.
+- Askıya alınmış/arşivlenmiş işletmenin tenant tarafından yeniden etkinleştirilmesi engellendi.
+- Müşteri profili, etiket, pazarlama izni ve ekip notlarını içeren tenant izoleli CRM eklendi.
+- Doğrulanmış müşteri randevularının CRM profiline otomatik işlenmesi eklendi.
+- Faz 4–5 tabloları için açık GRANT, allow/deny RLS testleri ve foreign-key indeksleri eklendi.
+- Randevu olaylarından otomatik ve tekrarsız kayıt üreten güvenli bildirim outbox'ı eklendi.
+- Aylık randevu/gelir/tahsilat/puan raporu ve manuel tahsilat kayıt ekranı eklendi.
+- Yalnızca tamamlanmış randevu sahibinin oluşturabildiği müşteri değerlendirme akışı eklendi.
+- İşletme operasyon ekranında bildirim kuyruğu ve değerlendirme yayın yönetimi eklendi.
+- PWA kurulum istemi, çevrimdışı durum uyarısı, sürüm güncelleme kartı ve eski cache temizliği eklendi.
+- Masaüstü, Pixel 7 ve gerçek offline service worker yeniden yüklemesini kapsayan Playwright E2E takımı eklendi.
+- GitHub Actions için uygulama ve local Supabase veritabanı kalite kapıları eklendi.
+- Production health doğrulama script'i, release checklist ve backup/restore operasyon runbook'u eklendi.
+- Tenant izoleli sadakat hesabı, değiştirilemez puan hareket geçmişi ve negatif bakiye koruması eklendi.
+- Pazarlama izni, aktif müşteri ve isteğe bağlı etiket filtresiyle kampanya hedefleme eklendi.
+- Kampanyaları harici sağlayıcı olmadan güvenli bildirim outbox'ına `pending` olarak aktaran yetkili RPC eklendi.
+- Sadakat/kampanya yönetim ekranı ve müşteri CSV dışa aktarımı eklendi.
+- Faz 7 tabloları için açık GRANT listesi, RLS allow/deny testleri ve production transaction doğrulaması eklendi.
+- Şema ve data dump'larını AES-256/PBKDF2 ile şifreleyen, checksum doğrulayan haftalık GitHub Actions backup workflow'u eklendi.
+- Şifreli backup artifact'larını yerelde doğrulayan `verify:backup` aracı ve restore runbook'u eklendi.
