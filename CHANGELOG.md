@@ -52,3 +52,6 @@
 - Faz 7 tabloları için açık GRANT listesi, RLS allow/deny testleri ve production transaction doğrulaması eklendi.
 - Şema ve data dump'larını AES-256/PBKDF2 ile şifreleyen, checksum doğrulayan haftalık GitHub Actions backup workflow'u eklendi.
 - Şifreli backup artifact'larını yerelde doğrulayan `verify:backup` aracı ve restore runbook'u eklendi.
+- Public GitHub deposu oluşturuldu; `main` dalında PR, güncel dal, çözülmüş konuşma ve başarılı `application`/`database` kontrolleri zorunlu hâle getirildi.
+- pgTAP testleri güncel imzalar ve açık rol sınırlarıyla kararlı hâle getirildi; GitHub Actions uygulama ve veritabanı işleri başarıyla doğrulandı.
+- Faz 8 final build'i Netlify production'a yayımlandı; ana sayfa, SPA rotaları, manifest ve service worker production health kontrolünden geçti.
