@@ -87,6 +87,20 @@ button:disabled {
   box-shadow: 0 16px 32px -14px rgb(79 70 229 / 85%);
 }
 
+.button-secondary {
+  border: 1px solid #c7d2fe;
+  background: rgb(255 255 255 / 88%);
+  color: #3730a3;
+  box-shadow: 0 12px 28px -18px rgb(49 46 129 / 55%);
+  backdrop-filter: blur(12px);
+}
+
+.button-secondary:not(:disabled):hover {
+  border-color: #a5b4fc;
+  background: white;
+  box-shadow: 0 18px 34px -20px rgb(49 46 129 / 70%);
+}
+
 .button-ghost {
   color: #475569;
 }
@@ -187,6 +201,26 @@ button:disabled {
   font-weight: 900;
   letter-spacing: 0.12em;
   text-transform: uppercase;
+}
+
+.section-title {
+  max-width: 17ch;
+  margin: 0.8rem auto 0;
+  color: #0f172a;
+  font-size: clamp(2rem, 5vw, 3.75rem);
+  font-weight: 950;
+  letter-spacing: -0.045em;
+  line-height: 1.02;
+  text-wrap: balance;
+}
+
+.demo-notice {
+  border: 1px solid #c7d2fe;
+  border-radius: 1rem;
+  background: linear-gradient(135deg, #eef2ff, #faf5ff);
+  padding: 1rem;
+  color: #4338ca;
+  font-weight: 800;
 }
 
 .feature-card {
@@ -412,6 +446,23 @@ button:disabled {
   .button-ghost:not(:disabled):hover {
     background: #1e293b;
     color: #a5b4fc;
+  }
+  .button-secondary {
+    border-color: #3730a3;
+    background: rgb(15 23 42 / 82%);
+    color: #c7d2fe;
+  }
+  .button-secondary:not(:disabled):hover {
+    border-color: #6366f1;
+    background: #1e293b;
+  }
+  .section-title {
+    color: #f8fafc;
+  }
+  .demo-notice {
+    border-color: #3730a3;
+    background: linear-gradient(135deg, rgb(30 27 75 / 75%), rgb(49 46 129 / 28%));
+    color: #c7d2fe;
   }
   .dashboard-preview {
     border-color: #334155;

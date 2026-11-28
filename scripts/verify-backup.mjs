@@ -6,9 +6,7 @@ import process from 'node:process'
 const [encryptedPath, checksumPath] = process.argv.slice(2)
 
 if (!encryptedPath || !checksumPath) {
-  globalThis.console.error(
-    'Usage: node scripts/verify-backup.mjs <backup.enc> <backup.enc.sha256>'
-  )
+  globalThis.console.error('Usage: node scripts/verify-backup.mjs <backup.enc> <backup.enc.sha256>')
   process.exitCode = 1
 } else {
   const [encrypted, checksumText] = await Promise.all([

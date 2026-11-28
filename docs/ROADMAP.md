@@ -2,16 +2,16 @@
 
 ## Faz durumu
 
-| Faz                      | Durum                   | Tamamlanma özeti                                                                                                                                                                            |
-| ------------------------ | ----------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| 1. Temel mimari          | Tamamlandı              | Uygulama kabuğu, auth, tenant/RLS, RBAC temeli ve genel ekran izin guard'ları hazır. Bağımsız Frankfurt production Supabase projesi kuruldu.                                              |
-| 2. İşletme yönetimi      | Tamamlandı              | Onboarding, katalog, ekip, çalışma saatleri, işletme/rezervasyon ayarları, yayınlama ve PNG/SVG QR paylaşımı production şemasında doğrulandı.                                            |
-| 3. Randevu sistemi       | Tamamlandı              | Canlı slot üretimi, müşteri rezervasyonu, transaction RPC, çakışma koruması, yaşam döngüsü, iptal/yeniden planlama ve müşteri paneli production işlem testiyle doğrulandı.               |
-| 4. Super Admin           | Tamamlandı              | Veritabanı tabanlı platform admin yetkisi, güvenli bootstrap, işletme/plan/feature flag yönetimi, audit ekranı ve production RLS doğrulaması hazır.                                         |
-| 5. İşletme operasyonları | Tamamlandı              | CRM, otomatik müşteri profili, bildirim outbox'ı, aylık raporlama, tahsilat kayıtları ve doğrulanmış randevu değerlendirmeleri production RLS ile hazır.                                    |
-| 6. PWA                   | Tamamlandı              | Manifest, service worker, kurulum istemi, offline uyarısı, güvenli cache sınırı, güncelleme deneyimi ve masaüstü/mobil/offline Playwright doğrulaması hazır.                                |
-| 7. Gelişmiş özellikler   | Tamamlandı              | Sadakat hesabı ve hareketleri, izinli hedef kitle kampanyaları, güvenli bildirim kuyruğu ve müşteri CSV dışa aktarımı production RLS ile hazır.                                             |
-| 8. Production hazırlığı  | Tamamlandı              | Public GitHub deposu, korumalı `main`, uygulama/veritabanı kalite kapıları, şifreli backup workflow'u, release runbook'ları ve doğrulanmış final Netlify production yayını hazır.          |
+| Faz                      | Durum      | Tamamlanma özeti                                                                                                                                                                  |
+| ------------------------ | ---------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 1. Temel mimari          | Tamamlandı | Uygulama kabuğu, auth, tenant/RLS, RBAC temeli ve genel ekran izin guard'ları hazır. Bağımsız Frankfurt production Supabase projesi kuruldu.                                      |
+| 2. İşletme yönetimi      | Tamamlandı | Onboarding, katalog, ekip, çalışma saatleri, işletme/rezervasyon ayarları, yayınlama ve PNG/SVG QR paylaşımı production şemasında doğrulandı.                                     |
+| 3. Randevu sistemi       | Tamamlandı | Canlı slot üretimi, müşteri rezervasyonu, transaction RPC, çakışma koruması, yaşam döngüsü, iptal/yeniden planlama ve müşteri paneli production işlem testiyle doğrulandı.        |
+| 4. Super Admin           | Tamamlandı | Veritabanı tabanlı platform admin yetkisi, güvenli bootstrap, işletme/plan/feature flag yönetimi, audit ekranı ve production RLS doğrulaması hazır.                               |
+| 5. İşletme operasyonları | Tamamlandı | CRM, otomatik müşteri profili, bildirim outbox'ı, aylık raporlama, tahsilat kayıtları ve doğrulanmış randevu değerlendirmeleri production RLS ile hazır.                          |
+| 6. PWA                   | Tamamlandı | Manifest, service worker, kurulum istemi, offline uyarısı, güvenli cache sınırı, güncelleme deneyimi ve masaüstü/mobil/offline Playwright doğrulaması hazır.                      |
+| 7. Gelişmiş özellikler   | Tamamlandı | Sadakat hesabı ve hareketleri, izinli hedef kitle kampanyaları, güvenli bildirim kuyruğu ve müşteri CSV dışa aktarımı production RLS ile hazır.                                   |
+| 8. Production hazırlığı  | Tamamlandı | Public GitHub deposu, korumalı `main`, uygulama/veritabanı kalite kapıları, şifreli backup workflow'u, release runbook'ları ve doğrulanmış final Netlify production yayını hazır. |
 
 ## Çalışan
 

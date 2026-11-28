@@ -75,7 +75,8 @@ const resources = {
         flags: 'Özellik bayrağı',
         auditEvents: 'Son denetim kaydı',
         businessManagement: 'İşletme ve abonelik yönetimi',
-        businessManagementHint: 'Durum ve plan değişiklikleri RLS ile yalnızca platform yöneticilerine açıktır.',
+        businessManagementHint:
+          'Durum ve plan değişiklikleri RLS ile yalnızca platform yöneticilerine açıktır.',
         business: 'İşletme',
         status: 'Durum',
         plan: 'Plan',
@@ -130,13 +131,16 @@ const resources = {
         noteAdded: 'Müşteri notu eklendi.',
         invalidName: 'Ad soyad en az 2 karakter olmalıdır.',
         saveError: 'CRM işlemi tamamlanamadı. Yetkinizi ve bağlantınızı kontrol edin.',
-        permissionDisabled: 'Bu işlem için müşteri yönetme yetkisi gerekiyor.'
+        permissionDisabled: 'Bu işlem için müşteri yönetme yetkisi gerekiyor.',
+        demoDisabled:
+          'Demo görünümünde örnek müşteri verileri gösterilir; CRM değişiklikleri kaydedilmez.'
       },
       growth: {
         nav: 'Büyüme',
         kicker: 'Müşteri büyümesi',
         title: 'Sadakat ve kampanyalar',
-        description: 'Müşteri sadakatini yönetin, izinli kitlelere kampanya hazırlayın ve verileri dışa aktarın.',
+        description:
+          'Müşteri sadakatini yönetin, izinli kitlelere kampanya hazırlayın ve verileri dışa aktarın.',
         back: 'Panele dön',
         exportCsv: 'CSV dışa aktar',
         customers: 'Toplam müşteri',
@@ -168,7 +172,8 @@ const resources = {
         campaignCreated: 'Kampanya taslağı oluşturuldu.',
         invalidCampaign: 'Kampanya adı, mesaj ve e-posta için konu alanını tamamlayın.',
         campaigns: 'Kampanya geçmişi',
-        providerMissing: 'E-posta/SMS sağlayıcısı bağlı değil. Kampanyalar yalnızca kuyruğa alınır; gönderildi sonucu üretilmez.',
+        providerMissing:
+          'E-posta/SMS sağlayıcısı bağlı değil. Kampanyalar yalnızca kuyruğa alınır; gönderildi sonucu üretilmez.',
         allConsenting: 'İzinli tüm müşteriler',
         queued: 'Kuyrukta',
         draft: 'Taslak',
@@ -177,12 +182,15 @@ const resources = {
         campaignQueued: '{{count}} müşteri için bildirim kuyruğu oluşturuldu.',
         emptyCampaigns: 'Henüz kampanya taslağı yok.',
         permissionDisabled: 'Bu işlem için müşteri yönetme yetkisi gerekiyor.',
+        demoDisabled:
+          'Demo görünümünde örnek büyüme verileri gösterilir; sadakat ve kampanya değişiklikleri kaydedilmez.',
         saveError: 'Büyüme işlemi tamamlanamadı. Yetkinizi ve bağlantınızı kontrol edin.'
       },
       operations: {
         kicker: 'İşletme operasyonları',
         title: 'Raporlar, tahsilat ve iletişim',
-        description: 'Aylık performansı, tahsilatları, bildirim kuyruğunu ve değerlendirmeleri izleyin.',
+        description:
+          'Aylık performansı, tahsilatları, bildirim kuyruğunu ve değerlendirmeleri izleyin.',
         back: 'Panele dön',
         appointments: 'Bu ay randevu',
         completed: 'Tamamlanan',
@@ -203,8 +211,12 @@ const resources = {
         paymentSaved: 'Tahsilat kaydedildi.',
         invalidAmount: 'Sıfırdan büyük geçerli bir tutar girin.',
         billingPermission: 'Tahsilat yönetme yetkisi gerekiyor.',
+        settingsPermission: 'Değerlendirme yayınını yönetme yetkisi gerekiyor.',
+        demoDisabled:
+          'Demo görünümünde örnek operasyon verileri gösterilir; tahsilat ve yayın değişiklikleri kaydedilmez.',
         notificationQueue: 'Bildirim kuyruğu',
-        providerMissing: 'E-posta/SMS sağlayıcısı bağlı değil; kayıtlar güvenle bekletiliyor ve gönderildi olarak işaretlenmiyor.',
+        providerMissing:
+          'E-posta/SMS sağlayıcısı bağlı değil; kayıtlar güvenle bekletiliyor ve gönderildi olarak işaretlenmiyor.',
         noNotifications: 'Henüz bildirim kuyruğu kaydı yok.',
         sendNow: 'Şimdi gönder',
         events: {
@@ -240,7 +252,8 @@ const resources = {
         error: 'Değerlendirme kaydedilemedi veya bu randevu daha önce değerlendirildi.'
       },
       pwa: {
-        offline: 'Çevrimdışısınız. Kayıtlı ekranlar açılabilir ancak veri yazma işlemleri bağlantı gelene kadar çalışmaz.',
+        offline:
+          'Çevrimdışısınız. Kayıtlı ekranlar açılabilir ancak veri yazma işlemleri bağlantı gelene kadar çalışmaz.',
         installTitle: 'Alley Randevu’yu yükleyin',
         installDescription: 'Daha hızlı erişim için uygulamayı cihazınıza ekleyin.',
         install: 'Uygulamayı yükle',
@@ -575,7 +588,8 @@ const resources = {
         flags: 'Feature flags',
         auditEvents: 'Recent audit events',
         businessManagement: 'Business and subscription management',
-        businessManagementHint: 'Status and plan changes are restricted to platform administrators by RLS.',
+        businessManagementHint:
+          'Status and plan changes are restricted to platform administrators by RLS.',
         business: 'Business',
         status: 'Status',
         plan: 'Plan',
@@ -630,13 +644,15 @@ const resources = {
         noteAdded: 'Customer note added.',
         invalidName: 'Full name must contain at least 2 characters.',
         saveError: 'The CRM operation failed. Check your access and connection.',
-        permissionDisabled: 'Customer management permission is required for this action.'
+        permissionDisabled: 'Customer management permission is required for this action.',
+        demoDisabled: 'Sample customer data is shown in demo mode; CRM changes are not saved.'
       },
       growth: {
         nav: 'Growth',
         kicker: 'Customer growth',
         title: 'Loyalty and campaigns',
-        description: 'Manage customer loyalty, prepare campaigns for consented audiences, and export data.',
+        description:
+          'Manage customer loyalty, prepare campaigns for consented audiences, and export data.',
         back: 'Back to dashboard',
         exportCsv: 'Export CSV',
         customers: 'Total customers',
@@ -655,7 +671,8 @@ const resources = {
         saveLoyalty: 'Save point transaction',
         saving: 'Saving…',
         loyaltySaved: 'Loyalty points updated. New balance: {{balance}}',
-        invalidLoyalty: 'Choose a customer, enter a positive whole number and a reason of at least 2 characters.',
+        invalidLoyalty:
+          'Choose a customer, enter a positive whole number and a reason of at least 2 characters.',
         newCampaign: 'New campaign',
         campaignHint: 'Create a draft, then place it in the secure notification queue when ready.',
         campaignName: 'Campaign name',
@@ -668,7 +685,8 @@ const resources = {
         campaignCreated: 'Campaign draft created.',
         invalidCampaign: 'Complete the campaign name, message, and subject for email campaigns.',
         campaigns: 'Campaign history',
-        providerMissing: 'No email/SMS provider is connected. Campaigns are only queued and are never reported as sent.',
+        providerMissing:
+          'No email/SMS provider is connected. Campaigns are only queued and are never reported as sent.',
         allConsenting: 'All consented customers',
         queued: 'Queued',
         draft: 'Draft',
@@ -677,12 +695,15 @@ const resources = {
         campaignQueued: 'A notification queue was created for {{count}} customers.',
         emptyCampaigns: 'No campaign drafts yet.',
         permissionDisabled: 'Customer management permission is required for this action.',
+        demoDisabled:
+          'Sample growth data is shown in demo mode; loyalty and campaign changes are not saved.',
         saveError: 'The growth operation failed. Check your access and connection.'
       },
       operations: {
         kicker: 'Business operations',
         title: 'Reports, payments, and communication',
-        description: 'Track monthly performance, payments, notification queue, and customer reviews.',
+        description:
+          'Track monthly performance, payments, notification queue, and customer reviews.',
         back: 'Back to dashboard',
         appointments: 'Appointments this month',
         completed: 'Completed',
@@ -698,8 +719,12 @@ const resources = {
         paymentSaved: 'Payment saved.',
         invalidAmount: 'Enter a valid amount greater than zero.',
         billingPermission: 'Payment management permission is required.',
+        settingsPermission: 'Review publication management permission is required.',
+        demoDisabled:
+          'Sample operations data is shown in demo mode; payment and publication changes are not saved.',
         notificationQueue: 'Notification queue',
-        providerMissing: 'No email/SMS provider is connected; records remain queued and are never reported as sent.',
+        providerMissing:
+          'No email/SMS provider is connected; records remain queued and are never reported as sent.',
         noNotifications: 'No queued notifications yet.',
         sendNow: 'Send now',
         events: {
@@ -708,7 +733,13 @@ const resources = {
           appointment_cancelled: 'Appointment cancelled',
           appointment_completed: 'Appointment completed'
         },
-        queueStatus: { pending: 'Pending', processing: 'Processing', sent: 'Sent', failed: 'Failed', cancelled: 'Cancelled' },
+        queueStatus: {
+          pending: 'Pending',
+          processing: 'Processing',
+          sent: 'Sent',
+          failed: 'Failed',
+          cancelled: 'Cancelled'
+        },
         reviews: 'Customer reviews',
         reviewsHint: 'Manage publication; rating and comment content cannot be changed.',
         publish: 'Publish',
@@ -729,7 +760,8 @@ const resources = {
         error: 'The review could not be saved or this appointment was already reviewed.'
       },
       pwa: {
-        offline: 'You are offline. Saved screens remain available, but data changes wait for a connection.',
+        offline:
+          'You are offline. Saved screens remain available, but data changes wait for a connection.',
         installTitle: 'Install Alley Randevu',
         installDescription: 'Add the app to your device for faster access.',
         install: 'Install app',

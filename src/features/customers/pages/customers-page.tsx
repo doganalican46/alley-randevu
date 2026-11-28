@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next'
 import { Link, useParams } from 'react-router-dom'
 import { useAuth } from '@/features/auth/auth-context'
 import { getBusinessMembership } from '@/features/businesses/data/business-membership.repository'
+import { demoBusinessCustomers } from '@/features/businesses/data/business-demo-data'
 import {
   addCustomerNote,
   createBusinessCustomer,
@@ -19,21 +20,23 @@ export default function CustomersPage() {
   const { user } = useAuth()
   const { t } = useTranslation()
   const queryClient = useQueryClient()
+  const isDemo = businessId === 'demo'
   const [message, setMessage] = useState<string | null>(null)
   const [noteCustomerId, setNoteCustomerId] = useState<string | null>(null)
   const [noteBody, setNoteBody] = useState('')
   const customerQuery = useQuery({
     queryKey: ['business-customers', businessId],
     queryFn: () => getBusinessCustomers(businessId),
+    enabled: !isDemo,
     retry: false
   })
   const membershipQuery = useQuery({
     queryKey: ['business-membership', businessId, user?.id],
     queryFn: () => getBusinessMembership(businessId, user?.id ?? ''),
-    enabled: Boolean(user?.id),
+    enabled: !isDemo && Boolean(user?.id),
     retry: false
   })
-  const canManage = hasBusinessPermission(membershipQuery.data, 'customers.manage')
+  const canManage = !isDemo && hasBusinessPermission(membershipQuery.data, 'customers.manage')
   const createMutation = useMutation({
     mutationFn: (input: {
       fullName: string
@@ -50,7 +53,8 @@ export default function CustomersPage() {
   const statusMutation = useMutation({
     mutationFn: ({ customerId, isActive }: { customerId: string; isActive: boolean }) =>
       setCustomerActive(customerId, isActive),
-    onSuccess: () => void queryClient.invalidateQueries({ queryKey: ['business-customers', businessId] })
+    onSuccess: () =>
+      void queryClient.invalidateQueries({ queryKey: ['business-customers', businessId] })
   })
   const noteMutation = useMutation({
     mutationFn: ({ customerId, body }: { customerId: string; body: string }) =>
@@ -87,9 +91,13 @@ export default function CustomersPage() {
     event.currentTarget.reset()
   }
 
-  if (customerQuery.isLoading || membershipQuery.isLoading) return <PageLoader />
-  const customers = customerQuery.data ?? []
-  const hasError = customerQuery.isError || createMutation.isError || statusMutation.isError || noteMutation.isError
+  if (!isDemo && (customerQuery.isLoading || membershipQuery.isLoading)) return <PageLoader />
+  const customers = isDemo ? demoBusinessCustomers : (customerQuery.data ?? [])
+  const hasError =
+    customerQuery.isError ||
+    createMutation.isError ||
+    statusMutation.isError ||
+    noteMutation.isError
 
   return (
     <main className="min-h-dvh bg-slate-50 px-5 py-8 dark:bg-slate-950">
@@ -105,8 +113,21 @@ export default function CustomersPage() {
           </Link>
         </header>
 
-        {message && <p role="status" className="mt-6 rounded-2xl bg-indigo-50 p-4 font-bold text-indigo-700">{message}</p>}
-        {hasError && <p role="alert" className="mt-6 rounded-2xl bg-rose-50 p-4 font-bold text-rose-700">{t('customers.saveError')}</p>}
+        {message && (
+          <p role="status" className="mt-6 rounded-2xl bg-indigo-50 p-4 font-bold text-indigo-700">
+            {message}
+          </p>
+        )}
+        {isDemo && (
+          <p role="note" className="demo-notice mt-6">
+            {t('customers.demoDisabled')}
+          </p>
+        )}
+        {hasError && (
+          <p role="alert" className="mt-6 rounded-2xl bg-rose-50 p-4 font-bold text-rose-700">
+            {t('customers.saveError')}
+          </p>
+        )}
 
         <div className="mt-8 grid gap-6 xl:grid-cols-[1fr_2fr]">
           <section className="panel h-fit">
@@ -121,7 +142,11 @@ export default function CustomersPage() {
               <Field label={t('customers.fullName')} name="fullName" required />
               <Field label={t('customers.email')} name="email" type="email" />
               <Field label={t('customers.phone')} name="phone" />
-              <Field label={t('customers.tags')} name="tags" placeholder={t('customers.tagsHint')} />
+              <Field
+                label={t('customers.tags')}
+                name="tags"
+                placeholder={t('customers.tagsHint')}
+              />
               <label className="flex items-start gap-3 rounded-2xl bg-slate-50 p-4 dark:bg-slate-900">
                 <input name="marketingConsent" type="checkbox" className="mt-1 size-4" />
                 <span className="text-sm font-bold">{t('customers.marketingConsent')}</span>
@@ -130,7 +155,11 @@ export default function CustomersPage() {
                 type="submit"
                 className="button button-primary w-full"
                 disabled={!canManage || createMutation.isPending}
-                title={!canManage ? t('customers.permissionDisabled') : undefined}
+                title={
+                  !canManage
+                    ? t(isDemo ? 'customers.demoDisabled' : 'customers.permissionDisabled')
+                    : undefined
+                }
               >
                 {createMutation.isPending ? t('customers.saving') : t('customers.create')}
               </button>
@@ -141,12 +170,17 @@ export default function CustomersPage() {
             <div className="panel-header">
               <div>
                 <h2 className="text-lg font-black">{t('customers.list')}</h2>
-                <p className="mt-1 text-sm text-slate-500">{t('customers.count', { count: customers.length })}</p>
+                <p className="mt-1 text-sm text-slate-500">
+                  {t('customers.count', { count: customers.length })}
+                </p>
               </div>
             </div>
             <div className="mt-4 grid gap-4 md:grid-cols-2">
               {customers.map((customer) => (
-                <article key={customer.id} className="rounded-3xl border border-slate-200 p-5 dark:border-slate-800">
+                <article
+                  key={customer.id}
+                  className="rounded-3xl border border-slate-200 p-5 dark:border-slate-800"
+                >
                   <div className="flex items-start justify-between gap-3">
                     <div className="flex min-w-0 items-center gap-3">
                       <span className="grid size-11 shrink-0 place-items-center rounded-full bg-indigo-100 text-indigo-700">
@@ -154,20 +188,41 @@ export default function CustomersPage() {
                       </span>
                       <div className="min-w-0">
                         <h3 className="truncate font-black">{customer.fullName}</h3>
-                        <p className="mt-1 text-xs text-slate-500">{t('customers.appointments', { count: customer.appointmentCount })}</p>
+                        <p className="mt-1 text-xs text-slate-500">
+                          {t('customers.appointments', { count: customer.appointmentCount })}
+                        </p>
                       </div>
                     </div>
-                    <span className={`status-badge ${customer.isActive ? 'status-confirmed' : 'status-waiting'}`}>
+                    <span
+                      className={`status-badge ${customer.isActive ? 'status-confirmed' : 'status-waiting'}`}
+                    >
                       {customer.isActive ? t('customers.active') : t('customers.archived')}
                     </span>
                   </div>
                   <div className="mt-4 space-y-2 text-sm text-slate-500">
-                    {customer.email && <p className="flex items-center gap-2"><Mail className="size-4" />{customer.email}</p>}
-                    {customer.phone && <p className="flex items-center gap-2"><Phone className="size-4" />{customer.phone}</p>}
+                    {customer.email && (
+                      <p className="flex items-center gap-2">
+                        <Mail className="size-4" />
+                        {customer.email}
+                      </p>
+                    )}
+                    {customer.phone && (
+                      <p className="flex items-center gap-2">
+                        <Phone className="size-4" />
+                        {customer.phone}
+                      </p>
+                    )}
                   </div>
                   {customer.tags.length > 0 && (
                     <div className="mt-4 flex flex-wrap gap-2">
-                      {customer.tags.map((tag) => <span key={tag} className="rounded-full bg-slate-100 px-3 py-1 text-xs font-bold dark:bg-slate-800">{tag}</span>)}
+                      {customer.tags.map((tag) => (
+                        <span
+                          key={tag}
+                          className="rounded-full bg-slate-100 px-3 py-1 text-xs font-bold dark:bg-slate-800"
+                        >
+                          {tag}
+                        </span>
+                      ))}
                     </div>
                   )}
                   {noteCustomerId === customer.id ? (
@@ -175,20 +230,70 @@ export default function CustomersPage() {
                       className="mt-4"
                       onSubmit={(event) => {
                         event.preventDefault()
-                        if (noteBody.trim().length >= 2) noteMutation.mutate({ customerId: customer.id, body: noteBody })
+                        if (noteBody.trim().length >= 2)
+                          noteMutation.mutate({ customerId: customer.id, body: noteBody })
                       }}
                     >
-                      <textarea className="form-input-wrap min-h-24 w-full p-3" value={noteBody} onChange={(event) => setNoteBody(event.target.value)} placeholder={t('customers.notePlaceholder')} />
+                      <textarea
+                        className="form-input-wrap min-h-24 w-full p-3"
+                        value={noteBody}
+                        onChange={(event) => setNoteBody(event.target.value)}
+                        placeholder={t('customers.notePlaceholder')}
+                      />
                       <div className="mt-3 flex gap-2">
-                        <button className="button button-primary" disabled={!canManage || noteBody.trim().length < 2}>{t('customers.saveNote')}</button>
-                        <button type="button" className="button button-ghost" onClick={() => setNoteCustomerId(null)}>{t('customers.cancel')}</button>
+                        <button
+                          className="button button-primary"
+                          disabled={!canManage || noteBody.trim().length < 2}
+                          title={isDemo ? t('customers.demoDisabled') : undefined}
+                        >
+                          {t('customers.saveNote')}
+                        </button>
+                        <button
+                          type="button"
+                          className="button button-ghost"
+                          onClick={() => setNoteCustomerId(null)}
+                        >
+                          {t('customers.cancel')}
+                        </button>
                       </div>
                     </form>
                   ) : (
                     <div className="mt-5 flex gap-2 border-t border-slate-100 pt-4 dark:border-slate-800">
-                      <button type="button" className="button button-ghost" disabled={!canManage} onClick={() => setNoteCustomerId(customer.id)}><NotebookPen className="size-4" />{t('customers.addNote')}</button>
-                      <button type="button" className="button button-ghost" disabled={!canManage || statusMutation.isPending} onClick={() => statusMutation.mutate({ customerId: customer.id, isActive: !customer.isActive })}>
-                        {customer.isActive ? <Archive className="size-4" /> : <CheckCircle2 className="size-4" />}
+                      <button
+                        type="button"
+                        className="button button-ghost"
+                        disabled={!canManage}
+                        title={
+                          !canManage
+                            ? t(isDemo ? 'customers.demoDisabled' : 'customers.permissionDisabled')
+                            : undefined
+                        }
+                        onClick={() => setNoteCustomerId(customer.id)}
+                      >
+                        <NotebookPen className="size-4" />
+                        {t('customers.addNote')}
+                      </button>
+                      <button
+                        type="button"
+                        className="button button-ghost"
+                        disabled={!canManage || statusMutation.isPending}
+                        title={
+                          !canManage
+                            ? t(isDemo ? 'customers.demoDisabled' : 'customers.permissionDisabled')
+                            : undefined
+                        }
+                        onClick={() =>
+                          statusMutation.mutate({
+                            customerId: customer.id,
+                            isActive: !customer.isActive
+                          })
+                        }
+                      >
+                        {customer.isActive ? (
+                          <Archive className="size-4" />
+                        ) : (
+                          <CheckCircle2 className="size-4" />
+                        )}
                         {customer.isActive ? t('customers.archive') : t('customers.activate')}
                       </button>
                     </div>
@@ -196,7 +301,9 @@ export default function CustomersPage() {
                 </article>
               ))}
             </div>
-            {customers.length === 0 && <p className="py-12 text-center text-slate-500">{t('customers.empty')}</p>}
+            {customers.length === 0 && (
+              <p className="py-12 text-center text-slate-500">{t('customers.empty')}</p>
+            )}
           </section>
         </div>
       </div>
@@ -204,12 +311,30 @@ export default function CustomersPage() {
   )
 }
 
-function Field({ label, name, type = 'text', required = false, placeholder }: { label: string; name: string; type?: string; required?: boolean; placeholder?: string }) {
+function Field({
+  label,
+  name,
+  type = 'text',
+  required = false,
+  placeholder
+}: {
+  label: string
+  name: string
+  type?: string
+  required?: boolean
+  placeholder?: string
+}) {
   return (
     <label className="block">
       <span className="mb-2 block text-sm font-black">{label}</span>
       <span className="form-input-wrap">
-        <input className="form-input" name={name} type={type} required={required} placeholder={placeholder} />
+        <input
+          className="form-input"
+          name={name}
+          type={type}
+          required={required}
+          placeholder={placeholder}
+        />
       </span>
     </label>
   )

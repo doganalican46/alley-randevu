@@ -82,28 +82,24 @@ export async function getPlatformSnapshot(): Promise<PlatformSnapshot> {
     featureResult,
     assignmentResult,
     auditResult
-  ] =
-    await Promise.all([
-      client
-        .from('businesses')
-        .select('id,name,slug,status,is_published,created_at')
-        .order('created_at', { ascending: false }),
-      client
-        .from('subscription_plans')
-        .select('id,code,name,monthly_price,currency,is_active')
-        .order('monthly_price'),
-      client.from('business_subscriptions').select('business_id,plan_id,status'),
-      client
-        .from('feature_flags')
-        .select('id,key,label,description,is_active')
-        .order('label'),
-      client.from('business_feature_flags').select('business_id,feature_flag_id,enabled'),
-      client
-        .from('audit_logs')
-        .select('id,business_id,action,entity_type,created_at')
-        .order('created_at', { ascending: false })
-        .limit(12)
-    ])
+  ] = await Promise.all([
+    client
+      .from('businesses')
+      .select('id,name,slug,status,is_published,created_at')
+      .order('created_at', { ascending: false }),
+    client
+      .from('subscription_plans')
+      .select('id,code,name,monthly_price,currency,is_active')
+      .order('monthly_price'),
+    client.from('business_subscriptions').select('business_id,plan_id,status'),
+    client.from('feature_flags').select('id,key,label,description,is_active').order('label'),
+    client.from('business_feature_flags').select('business_id,feature_flag_id,enabled'),
+    client
+      .from('audit_logs')
+      .select('id,business_id,action,entity_type,created_at')
+      .order('created_at', { ascending: false })
+      .limit(12)
+  ])
 
   const failure = [
     businessResult,
