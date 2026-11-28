@@ -62,7 +62,12 @@ const resources = {
         branchName: 'İlk şube adı',
         creating: 'Çalışma alanı oluşturuluyor…',
         submit: 'Çalışma alanını oluştur',
-        genericError: 'İşletme kurulumu tamamlanamadı. Lütfen tekrar deneyin.'
+        genericError: 'İşletme kurulumu tamamlanamadı. Lütfen tekrar deneyin.',
+        errors: {
+          duplicateSlug: 'Bu randevu bağlantısı daha önce alınmış. Başka bir bağlantı seçin.',
+          sessionExpired: 'Oturumunuz sona ermiş. Yeniden giriş yapıp tekrar deneyin.',
+          permissionDenied: 'İşletme oluşturma yetkisi doğrulanamadı. Lütfen tekrar giriş yapın.'
+        }
       },
       platform: {
         kicker: 'Platform yönetimi',
@@ -575,7 +580,13 @@ const resources = {
         branchName: 'First branch name',
         creating: 'Creating workspace…',
         submit: 'Create workspace',
-        genericError: 'Business setup could not be completed. Please try again.'
+        genericError: 'Business setup could not be completed. Please try again.',
+        errors: {
+          duplicateSlug: 'This booking link is already taken. Choose another link.',
+          sessionExpired: 'Your session has expired. Sign in again and retry.',
+          permissionDenied:
+            'Your permission to create a business could not be verified. Sign in again.'
+        }
       },
       platform: {
         kicker: 'Platform management',
