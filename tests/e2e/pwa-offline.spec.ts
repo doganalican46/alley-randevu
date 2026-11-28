@@ -1,6 +1,9 @@
 import { expect, test } from '@playwright/test'
 
-test('cached application shell reloads offline and explains write limitations', async ({ context, page }) => {
+test('cached application shell reloads offline and explains write limitations', async ({
+  context,
+  page
+}) => {
   await page.goto('/')
   await page.evaluate(async () => {
     await navigator.serviceWorker.ready

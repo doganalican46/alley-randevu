@@ -49,11 +49,15 @@ export default function PlatformDashboardPage() {
 
   if (snapshotQuery.isLoading) return <PageLoader />
   if (snapshotQuery.isError || !snapshotQuery.data) {
-    return <PlatformMessage title={t('platform.loadError')} description={t('platform.loadErrorHint')} />
+    return (
+      <PlatformMessage title={t('platform.loadError')} description={t('platform.loadErrorHint')} />
+    )
   }
 
   const snapshot = snapshotQuery.data
-  const activeBusinesses = snapshot.businesses.filter((business) => business.status === 'active').length
+  const activeBusinesses = snapshot.businesses.filter(
+    (business) => business.status === 'active'
+  ).length
 
   return (
     <main className="min-h-dvh bg-slate-950 px-5 py-8 text-slate-100 lg:px-10">
@@ -71,14 +75,33 @@ export default function PlatformDashboardPage() {
         </header>
 
         <section className="mt-8 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
-          <PlatformMetric icon={Building2} label={t('platform.businesses')} value={snapshot.businesses.length} />
-          <PlatformMetric icon={ShieldCheck} label={t('platform.activeBusinesses')} value={activeBusinesses} />
-          <PlatformMetric icon={Flag} label={t('platform.flags')} value={snapshot.featureFlags.length} />
-          <PlatformMetric icon={ScrollText} label={t('platform.auditEvents')} value={snapshot.auditLogs.length} />
+          <PlatformMetric
+            icon={Building2}
+            label={t('platform.businesses')}
+            value={snapshot.businesses.length}
+          />
+          <PlatformMetric
+            icon={ShieldCheck}
+            label={t('platform.activeBusinesses')}
+            value={activeBusinesses}
+          />
+          <PlatformMetric
+            icon={Flag}
+            label={t('platform.flags')}
+            value={snapshot.featureFlags.length}
+          />
+          <PlatformMetric
+            icon={ScrollText}
+            label={t('platform.auditEvents')}
+            value={snapshot.auditLogs.length}
+          />
         </section>
 
         {(statusMutation.isError || planMutation.isError || flagMutation.isError) && (
-          <p role="alert" className="mt-6 rounded-2xl border border-rose-800 bg-rose-950/60 p-4 text-rose-200">
+          <p
+            role="alert"
+            className="mt-6 rounded-2xl border border-rose-800 bg-rose-950/60 p-4 text-rose-200"
+          >
             {t('platform.saveError')}
           </p>
         )}
@@ -133,16 +156,21 @@ export default function PlatformDashboardPage() {
                         aria-label={t('platform.plan')}
                         onChange={(event) => {
                           if (event.target.value) {
-                            planMutation.mutate({ businessId: business.id, planId: event.target.value })
+                            planMutation.mutate({
+                              businessId: business.id,
+                              planId: event.target.value
+                            })
                           }
                         }}
                       >
                         <option value="">{t('platform.noPlan')}</option>
-                        {snapshot.plans.filter((plan) => plan.isActive).map((plan) => (
-                          <option key={plan.id} value={plan.id}>
-                            {plan.name} · {plan.monthlyPrice} {plan.currency}
-                          </option>
-                        ))}
+                        {snapshot.plans
+                          .filter((plan) => plan.isActive)
+                          .map((plan) => (
+                            <option key={plan.id} value={plan.id}>
+                              {plan.name} · {plan.monthlyPrice} {plan.currency}
+                            </option>
+                          ))}
                       </select>
                     </td>
                     <td className="px-6 py-5 text-slate-400">
@@ -168,30 +196,34 @@ export default function PlatformDashboardPage() {
               <article key={business.id} className="rounded-2xl bg-slate-950/70 p-5">
                 <p className="font-black">{business.name}</p>
                 <div className="mt-4 space-y-3">
-                  {snapshot.featureFlags.filter((flag) => flag.isActive).map((flag) => {
-                    const assignment = snapshot.featureAssignments.find(
-                      (item) =>
-                        item.businessId === business.id && item.featureFlagId === flag.id
-                    )
-                    return (
-                      <label key={flag.id} className="flex items-center justify-between gap-4 text-sm">
-                        <span className="font-bold text-slate-300">{flag.label}</span>
-                        <input
-                          type="checkbox"
-                          className="size-5 accent-indigo-500"
-                          checked={assignment?.enabled ?? false}
-                          disabled={flagMutation.isPending}
-                          onChange={(event) =>
-                            flagMutation.mutate({
-                              businessId: business.id,
-                              featureFlagId: flag.id,
-                              enabled: event.target.checked
-                            })
-                          }
-                        />
-                      </label>
-                    )
-                  })}
+                  {snapshot.featureFlags
+                    .filter((flag) => flag.isActive)
+                    .map((flag) => {
+                      const assignment = snapshot.featureAssignments.find(
+                        (item) => item.businessId === business.id && item.featureFlagId === flag.id
+                      )
+                      return (
+                        <label
+                          key={flag.id}
+                          className="flex items-center justify-between gap-4 text-sm"
+                        >
+                          <span className="font-bold text-slate-300">{flag.label}</span>
+                          <input
+                            type="checkbox"
+                            className="size-5 accent-indigo-500"
+                            checked={assignment?.enabled ?? false}
+                            disabled={flagMutation.isPending}
+                            onChange={(event) =>
+                              flagMutation.mutate({
+                                businessId: business.id,
+                                featureFlagId: flag.id,
+                                enabled: event.target.checked
+                              })
+                            }
+                          />
+                        </label>
+                      )
+                    })}
                 </div>
               </article>
             ))}
@@ -240,7 +272,15 @@ export default function PlatformDashboardPage() {
   )
 }
 
-function PlatformMetric({ icon: Icon, label, value }: { icon: typeof Building2; label: string; value: number }) {
+function PlatformMetric({
+  icon: Icon,
+  label,
+  value
+}: {
+  icon: typeof Building2
+  label: string
+  value: number
+}) {
   return (
     <article className="rounded-3xl border border-slate-800 bg-slate-900 p-5">
       <Icon className="size-5 text-indigo-400" />

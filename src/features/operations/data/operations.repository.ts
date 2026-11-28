@@ -99,9 +99,10 @@ export async function getBusinessOperations(businessId: string): Promise<Busines
       completedCount: Number(report?.completed_count ?? 0),
       appointmentRevenue: Number(report?.appointment_revenue ?? 0),
       collectedAmount: Number(report?.collected_amount ?? 0),
-      averageRating: report?.average_rating === null || report?.average_rating === undefined
-        ? null
-        : Number(report.average_rating)
+      averageRating:
+        report?.average_rating === null || report?.average_rating === undefined
+          ? null
+          : Number(report.average_rating)
     },
     outbox: (outboxResult.data ?? []).map((entry) => ({
       id: entry.id,
@@ -151,8 +152,12 @@ export async function createPayment(input: {
 
 export async function setReviewPublished(reviewId: string, isPublished: boolean): Promise<void> {
   const client = requireClient()
-  const { error } = await client.from('reviews').update({ is_published: isPublished }).eq('id', reviewId)
-  if (error) throw new AppError('TENANT_ACCESS_DENIED', 'Değerlendirme durumu güncellenemedi.', error)
+  const { error } = await client
+    .from('reviews')
+    .update({ is_published: isPublished })
+    .eq('id', reviewId)
+  if (error)
+    throw new AppError('TENANT_ACCESS_DENIED', 'Değerlendirme durumu güncellenemedi.', error)
 }
 
 export async function submitAppointmentReview(input: {

@@ -188,12 +188,16 @@ export default function CustomerAppointmentsPage() {
                               onClick={() => setRating(value)}
                               aria-label={`${value}`}
                             >
-                              <Star className={`size-5 ${value <= rating ? 'fill-amber-400 text-amber-400' : 'text-slate-400'}`} />
+                              <Star
+                                className={`size-5 ${value <= rating ? 'fill-amber-400 text-amber-400' : 'text-slate-400'}`}
+                              />
                             </button>
                           ))}
                         </div>
                         <label className="mt-4 block">
-                          <span className="mb-2 block text-sm font-black">{t('reviews.comment')}</span>
+                          <span className="mb-2 block text-sm font-black">
+                            {t('reviews.comment')}
+                          </span>
                           <textarea
                             className="form-input-wrap min-h-24 w-full p-3"
                             value={reviewComment}
@@ -205,11 +209,20 @@ export default function CustomerAppointmentsPage() {
                             type="button"
                             className="button button-primary"
                             disabled={reviewMutation.isPending}
-                            onClick={() => reviewMutation.mutate({ businessId: appointment.businessId, appointmentId: appointment.id })}
+                            onClick={() =>
+                              reviewMutation.mutate({
+                                businessId: appointment.businessId,
+                                appointmentId: appointment.id
+                              })
+                            }
                           >
                             {t('reviews.submit')}
                           </button>
-                          <button type="button" className="button button-ghost" onClick={() => setReviewId(null)}>
+                          <button
+                            type="button"
+                            className="button button-ghost"
+                            onClick={() => setReviewId(null)}
+                          >
                             {t('reviews.cancel')}
                           </button>
                         </div>

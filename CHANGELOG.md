@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.1.1 - 2026-11-28
+
+- Demo müşteri, operasyon ve büyüme rotalarının Supabase'e geçersiz `demo` UUID'si göndermesi engellendi; güvenli örnek veri ve açıklamalı salt-okunur kontroller eklendi.
+- Landing sayfasındaki eksik ikincil buton ve bölüm başlığı stilleri açık/koyu tema desteğiyle tamamlandı.
+- Geçişli Workbox bağımlılığındaki güvenlik uyarıları yamalı `glob` sürümüyle giderildi.
+- Sekiz demo işletme rotasında çalışma zamanı, Supabase 4xx ve yatay taşma hatalarını masaüstü/mobil tarayıcıda yakalayan E2E kontrolü eklendi.
+- Proje genelindeki Prettier biçim sapmaları temizlendi.
+
 ## 0.1.0 - 2026-11-26
 
 - React 19, TypeScript 6, Vite 8 ve Tailwind CSS 4 tabanlı proje oluşturuldu.
