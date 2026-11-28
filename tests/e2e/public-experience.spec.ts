@@ -8,6 +8,27 @@ test('landing and authentication entry points are usable', async ({ page }) => {
   await expect(page.getByRole('heading', { level: 1 })).toBeVisible()
 })
 
+test('landing hero stays inside the viewport without decorative overlap', async ({ page }) => {
+  for (const viewport of [
+    { width: 390, height: 844 },
+    { width: 1440, height: 900 }
+  ]) {
+    await page.setViewportSize(viewport)
+    await page.goto('/')
+
+    const preview = page.getByTestId('hero-dashboard-preview')
+    await expect(preview).toBeVisible()
+    const box = await preview.boundingBox()
+
+    expect(box).not.toBeNull()
+    expect(box?.x).toBeGreaterThanOrEqual(0)
+    expect((box?.x ?? 0) + (box?.width ?? 0)).toBeLessThanOrEqual(viewport.width)
+    await expect
+      .poll(() => page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth))
+      .toBe(true)
+  }
+})
+
 test('SPA routes return the application shell', async ({ page }) => {
   await page.goto('/app/appointments')
   await expect(page).toHaveURL(/\/login$/)

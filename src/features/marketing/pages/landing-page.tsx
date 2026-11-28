@@ -75,19 +75,8 @@ export default function LandingPage() {
             </div>
           </div>
 
-          <div className="relative mx-auto w-full max-w-xl lg:mx-0">
-            <div className="absolute -left-8 top-16 hidden w-44 rounded-3xl border border-white/70 bg-white/90 p-4 shadow-xl shadow-indigo-100 backdrop-blur lg:block dark:border-slate-700 dark:bg-slate-900/90 dark:shadow-none">
-              <div className="flex items-center gap-3">
-                <span className="grid size-10 place-items-center rounded-2xl bg-emerald-100 text-emerald-700">
-                  <CalendarCheck2 className="size-5" />
-                </span>
-                <div>
-                  <p className="text-xs font-bold text-slate-500">Bugün</p>
-                  <p className="text-xl font-black">12 randevu</p>
-                </div>
-              </div>
-            </div>
-            <div className="dashboard-preview">
+          <div className="relative mx-auto min-w-0 w-full max-w-xl lg:mx-0">
+            <div className="dashboard-preview" data-testid="hero-dashboard-preview">
               <div className="flex items-center justify-between border-b border-slate-100 pb-5 dark:border-slate-800">
                 <div>
                   <p className="text-sm font-semibold text-slate-500">26 Kasım, Perşembe</p>

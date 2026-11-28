@@ -42,22 +42,24 @@ export default function OnboardingPage() {
       const businessId = await onboardBusiness(values)
       navigate(`/business/${businessId}`, { replace: true })
     } catch (error) {
-      setFeedback(error instanceof AppError ? error.message : t('onboarding.genericError'))
+      setFeedback(t(getOnboardingErrorKey(error)))
     }
   }
 
   return (
-    <main className="min-h-dvh bg-slate-50 px-5 py-8 dark:bg-slate-950 sm:py-12">
+    <main className="min-h-dvh overflow-x-hidden bg-slate-50 px-4 py-6 dark:bg-slate-950 sm:px-5 sm:py-12">
       <div className="mx-auto max-w-6xl">
         <BrandMark />
-        <div className="mt-10 grid gap-8 lg:grid-cols-[.78fr_1.22fr]">
-          <aside className="rounded-[2rem] bg-slate-950 p-8 text-white sm:p-10">
+        <div className="mt-7 grid min-w-0 gap-6 sm:mt-10 lg:grid-cols-[.78fr_1.22fr] lg:gap-8">
+          <aside className="min-w-0 rounded-[1.5rem] bg-slate-950 p-6 text-white sm:rounded-[2rem] sm:p-10">
             <span className="demo-pill !bg-indigo-500/20 !text-indigo-200">
               {t('onboarding.stepLabel')}
             </span>
-            <h1 className="mt-6 text-4xl font-black tracking-[-0.04em]">{t('onboarding.title')}</h1>
+            <h1 className="mt-5 text-3xl font-black leading-tight tracking-[-0.04em] sm:mt-6 sm:text-4xl">
+              {t('onboarding.title')}
+            </h1>
             <p className="mt-4 leading-7 text-slate-300">{t('onboarding.description')}</p>
-            <div className="mt-10 space-y-5">
+            <div className="mt-8 space-y-4 sm:mt-10 sm:space-y-5">
               {(['tenant', 'owner', 'branch'] as const).map((key) => (
                 <div key={key} className="flex gap-3">
                   <span className="mt-0.5 grid size-6 shrink-0 place-items-center rounded-full bg-emerald-500/20 text-emerald-300">
@@ -69,16 +71,22 @@ export default function OnboardingPage() {
                 </div>
               ))}
             </div>
-            <div className="mt-12 flex items-center gap-3 border-t border-white/10 pt-7 text-sm text-slate-400">
-              <ShieldCheck className="size-5 text-indigo-300" />
-              {t('onboarding.securityNote')}
+            <div className="mt-8 flex items-start gap-3 border-t border-white/10 pt-6 text-sm leading-6 text-slate-400 sm:mt-12 sm:pt-7">
+              <ShieldCheck className="mt-0.5 size-5 shrink-0 text-indigo-300" />
+              <span>{t('onboarding.securityNote')}</span>
             </div>
           </aside>
 
-          <section className="rounded-[2rem] border border-slate-200 bg-white p-6 shadow-xl shadow-slate-200/50 dark:border-slate-800 dark:bg-slate-900 dark:shadow-none sm:p-10">
+          <section className="min-w-0 rounded-[1.5rem] border border-slate-200 bg-white p-5 shadow-xl shadow-slate-200/50 dark:border-slate-800 dark:bg-slate-900 dark:shadow-none sm:rounded-[2rem] sm:p-10">
             <p className="section-kicker">{t('onboarding.formKicker')}</p>
-            <h2 className="mt-2 text-3xl font-black tracking-tight">{t('onboarding.formTitle')}</h2>
-            <form className="mt-8 space-y-6" onSubmit={handleSubmit(onSubmit)} noValidate>
+            <h2 className="mt-2 text-2xl font-black leading-tight tracking-tight sm:text-3xl">
+              {t('onboarding.formTitle')}
+            </h2>
+            <form
+              className="mt-6 space-y-5 sm:mt-8 sm:space-y-6"
+              onSubmit={handleSubmit(onSubmit)}
+              noValidate
+            >
               <OnboardingField
                 icon={Building2}
                 label={t('onboarding.businessName')}
@@ -143,6 +151,21 @@ export default function OnboardingPage() {
       </div>
     </main>
   )
+}
+
+function getOnboardingErrorKey(error: unknown): string {
+  if (!(error instanceof AppError)) return 'onboarding.genericError'
+
+  switch (error.code) {
+    case 'VALIDATION_ERROR':
+      return 'onboarding.errors.duplicateSlug'
+    case 'AUTHENTICATION_ERROR':
+      return 'onboarding.errors.sessionExpired'
+    case 'AUTHORIZATION_ERROR':
+      return 'onboarding.errors.permissionDenied'
+    default:
+      return 'onboarding.genericError'
+  }
 }
 
 function OnboardingField({

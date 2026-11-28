@@ -15,12 +15,17 @@ export async function createBusinessWorkspace(values: OnboardingValues): Promise
   })
 
   if (error) {
-    const isDuplicate = error.code === '23505'
+    const errorCode =
+      error.code === '23505'
+        ? 'VALIDATION_ERROR'
+        : error.code === '28000'
+          ? 'AUTHENTICATION_ERROR'
+          : error.code === '42501'
+            ? 'AUTHORIZATION_ERROR'
+            : 'INTERNAL_ERROR'
     throw new AppError(
-      isDuplicate ? 'VALIDATION_ERROR' : 'INTERNAL_ERROR',
-      isDuplicate
-        ? 'Bu işletme bağlantısı daha önce alınmış. Başka bir bağlantı seçin.'
-        : 'İşletme çalışma alanı oluşturulamadı.',
+      errorCode,
+      `Business workspace creation failed (${error.code ?? 'unknown'})`,
       error
     )
   }
